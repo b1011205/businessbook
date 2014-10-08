@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct {
 char name[30];
@@ -11,7 +12,7 @@ float turnover;
 
 
 int main(void){
-    int n,i;
+    int n,i,flag=0;
     float k=0,l=0;
     char question[256];
     BUSINESS info[10];
@@ -36,7 +37,25 @@ for(i=0;i<sizeof(info)/sizeof(info[0]);i++){
 printf("Average turnover of all companies is %.2f\n",k/l);
 }
 
+//企業名or企業idで検索結果を出力する
+for(i=0;i<sizeof(info)/sizeof(info[0]);i++){
 
-printf("%s\n%s\n%d\n%.2f\n",info[0].name,info[0].district,info[0].id,info[0].turnover);
+//企業名一致
+if(strcmp(info[i].name,question)==0)
+printf("企業名一致\nName:%s\nDistrict:%s\nId:%d\nTurnover:%.2f\n\n",info[i].name,info[i].district,info[i].id,info[i].turnover);
+
+//id一致
+if(info[i].id==atoi(question) && atoi(question)!=0)
+	printf("Id一致\nName:%s\nDistrict:%s\nId:%d\nTurnover:%.2f\n\n",info[i].name,info[i].district,info[i].id,info[i].turnover);
+
+//地域一致
+if(strcmp(info[i].district,question)==0&&flag==0)
+        printf("Companies in district %s :\n",question); flag=1;
+if(strcmp(info[i].district,question)==0&&flag==1)
+	printf("%s\n",info[i].name);
+
+}
+
+
 
 }
